@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Booth Attendant Handbook | Prestige Weddings & Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://nodevoe-blip.github.io/photo-booth-handbook/photo-booth-handbook.css">
+<style>
+:root {
+  --navy: #054371;
+  --navy-deep: #032b4a;
+  --navy-light: #0a5a94;
+  --gold: #C9A84C;
+  --gold-light: #d4b96a;
+  --gold-muted: #b89a45;
+  --gold-bg: #f8f3e6;
+  --cream: #F6F4F1;
+  --warm-white: #F6F4F1;
+  --text-primary: #054371;
+  --text-body: #3a3a3a;
+  --text-muted: #6b6b6b;
+  --border-light: #e8e4db;
+  --border-gold: rgba(201, 168, 76, 0.3);
+  --shadow-sm: 0 1px 3px rgba(5,67,113,0.06);
+  --shadow-md: 0 4px 16px rgba(5,67,113,0.08);
+  --shadow-lg: 0 8px 32px rgba(5,67,113,0.1);
+  --heading-font: 'TAN Aegean', 'Playfair Display', Georgia, serif;
+  --body-font: 'Outfit', system-ui, sans-serif;
+  --content-max: 780px;
+  --section-gap: 4rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: var(--body-font);
+  color: var(--text-body);
+  background: var(--warm-white);
+  line-height: 1.7;
+  font-weight: 300;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════ */
+/* STICKY NAV                             */
+/* ═══════════════════════════════════════ */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--navy-deep);
+  border-bottom: 2px solid var(--gold);
+  transition: box-shadow 0.3s;
+}
+.topbar.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.topbar-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 60px;
+}
+.topbar-brand {
+  font-family: var(--heading-font);
+  color: var(--gold);
+  font-size: 1.1rem; font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.topbar-brand span { color: rgba(255,255,255,0.6); font-weight: 400; }
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 32px; height: 32px; position: relative;
+}
+.nav-toggle span {
+  display: block; width: 22px; height: 2px; background: var(--gold);
+  position: absolute; left: 5px; transition: 0.3s;
+}
+.nav-toggle span:nth-child(1) { top: 9px; }
+.nav-toggle span:nth-child(2) { top: 15px; }
+.nav-toggle span:nth-child(3) { top: 21px; }
+.nav-toggle.open span:nth-child(1) { transform: rotate(45deg); top: 15px; }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: rotate(-45deg); top: 15px; }
+
+.toc-nav {
+  display: flex; gap: 0; align-items: center; overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc-nav::-webkit-scrollbar { display: none; }
+.toc-nav a {
+  color: rgba(255,255,255,0.55); text-decoration: none;
+  font-size: 0.78rem; font-weight: 400; letter-spacing: 0.02em;
+  padding: 0.5rem 0.75rem; white-space: nowrap;
+  transition: color 0.2s;
+  border-bottom: 2px solid transparent;
+}
+.toc-nav a:hover, .toc-nav a.active {
+  color: var(--gold); border-bottom-color: var(--gold);
+}
+
+@media (max-width: 900px) {
+  .nav-toggle { display: block; }
+  .toc-nav {
+    display: none; flex-direction: column;
+    position: absolute; top: 60px; left: 0; right: 0;
+    background: var(--navy-deep); border-bottom: 2px solid var(--gold);
+    padding: 1rem 0;
+  }
+  .toc-nav.open { display: flex; }
+  .toc-nav a { padding: 0.7rem 2rem; font-size: 0.85rem; border-bottom: none; }
+}
+
+/* ═══════════════════════════════════════ */
+/* HERO                                   */
+/* ═══════════════════════════════════════ */
+.hero {
+  margin-top: 60px;
+  background: var(--navy-deep);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 85vh; text-align: center;
+  padding: 4rem 2rem;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(201,168,76,0.05) 0%, transparent 50%);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+  background: linear-gradient(to top, var(--warm-white), transparent);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-rule {
+  width: 80px; height: 2px; background: var(--gold);
+  margin: 0 auto 2rem; opacity: 0;
+  animation: fadeSlideUp 0.8s 0.3s forwards;
+}
+.hero h1 {
+  font-family: var(--heading-font); color: white;
+  font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 0.3rem;
+  opacity: 0; animation: fadeSlideUp 0.8s 0.5s forwards;
+}
+.hero h2 {
+  font-family: var(--heading-font); color: var(--gold);
+  font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0; animation: fadeSlideUp 0.8s 0.7s forwards;
+}
+.hero-sub {
+  font-family: var(--heading-font); color: rgba(255,255,255,0.5);
+  font-size: 1.1rem; font-style: italic; font-weight: 400;
+  margin-top: 1.5rem;
+  opacity: 0; animation: fadeSlideUp 0.8s 0.9s forwards;
+}
+.hero-url {
+  color: var(--gold-muted); font-size: 0.85rem; letter-spacing: 0.1em;
+  margin-top: 2.5rem; opacity: 0;
+  animation: fadeSlideUp 0.8s 1.1s forwards;
+}
+.hero-url a { color: var(--gold-muted); text-decoration: none; }
+.hero-url a:hover { color: var(--gold-light); }
+.hero-scroll {
+  position: absolute; bottom: 140px; left: 50%; transform: translateX(-50%);
+  z-index: 2; opacity: 0; animation: fadeSlideUp 0.8s 1.3s forwards;
+}
+.hero-scroll a {
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  color: rgba(255,255,255,0.3); text-decoration: none;
+  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+}
+.hero-scroll svg { animation: bobDown 2s infinite ease-in-out; }
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bobDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ═══════════════════════════════════════ */
+/* MAIN CONTENT AREA                      */
+/* ═══════════════════════════════════════ */
+.handbook-body { padding: 2rem 2rem 6rem; }
+.section {
+  max-width: var(--content-max); margin: 0 auto;
+  padding-top: var(--section-gap);
+}
+.section:first-child { padding-top: 2rem; }
+
+/* Section Headers */
+.section-number {
+  font-family: var(--heading-font);
+  font-size: 0.85rem; font-weight: 500;
+  color: var(--gold); letter-spacing: 0.15em;
+  text-transform: uppercase; margin-bottom: 0.25rem;
+}
+.section h2 {
+  font-family: var(--heading-font);
+  color: var(--text-primary);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 600; line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+.section-divider {
+  width: 50px; height: 2px; background: var(--gold);
+  margin: 1rem 0 1.5rem;
+}
+.section-intro {
+  font-family: var(--heading-font);
+  font-style: italic; color: var(--text-muted);
+  font-size: 1.05rem; margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* Subheadings */
+.section h3 {
+  font-family: var(--heading-font);
+  color: var(--text-primary);
+  font-size: 1.35rem; font-weight: 600;
+  margin: 2rem 0 0.75rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.section h4 {
+  font-family: var(--heading-font);
+  color: var(--gold-muted); font-size: 1.1rem;
+  font-weight: 600; margin: 1.5rem 0 0.5rem;
+}
+
+/* Paragraphs */
+.section p {
+  margin-bottom: 1rem; font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+/* Lists */
+.section ul, .section ol {
+  margin: 0.75rem 0 1.25rem 1.4rem;
+}
+.section li {
+  margin-bottom: 0.5rem; font-size: 0.95rem;
+  line-height: 1.65; padding-left: 0.3rem;
+}
+.section ul li::marker { color: var(--gold); }
+.section ol li::marker { color: var(--gold); font-weight: 500; }
+
+/* ═══════════════════════════════════════ */
+/* CONTACT TABLE / INFO TABLES            */
+/* ═══════════════════════════════════════ */
+.info-table {
+  width: 100%; border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  border-radius: 8px; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.info-table th {
+  background: var(--navy); color: white;
+  font-family: var(--heading-font);
+  font-size: 0.9rem; font-weight: 500;
+  letter-spacing: 0.05em;
+  text-align: left; padding: 0.75rem 1.1rem;
+}
+.info-table td {
+  padding: 0.7rem 1.1rem; font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.info-table tr:nth-child(even) td { background: var(--cream); }
+.info-table .label {
+  font-weight: 500; color: var(--text-primary);
+  width: 35%; white-space: nowrap;
+}
+
+/* Compensation Table */
+.comp-table {
+  width: 100%; border-collapse: collapse;
+  margin: 1rem 0 1.5rem; border-radius: 8px;
+  overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.comp-table th {
+  background: var(--navy); color: white;
+  font-family: var(--heading-font);
+  font-size: 0.85rem; font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.7rem 1rem; text-align: center;
+}
+.comp-table th:first-child { text-align: left; }
+.comp-table td {
+  padding: 0.65rem 1rem; font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+  text-align: center;
+}
+.comp-table td:first-child { text-align: left; font-weight: 400; }
+.comp-table tr:nth-child(even) td { background: var(--cream); }
+
+/* LED Error Table */
+.led-table {
+  width: 100%; border-collapse: collapse;
+  margin: 1rem 0 1.5rem; border-radius: 8px;
+  overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.led-table th {
+  background: var(--navy); color: white;
+  font-family: var(--heading-font);
+  font-size: 0.85rem; font-weight: 500;
+  padding: 0.7rem 1rem; text-align: left;
+}
+.led-table td {
+  padding: 0.65rem 1rem; font-size: 0.88rem;
+  border-bottom: 1px solid var(--border-light);
+  line-height: 1.5;
+}
+.led-table td:first-child {
+  font-weight: 500; color: var(--text-primary);
+  white-space: nowrap; width: 38%;
+}
+.led-table tr:nth-child(even) td { background: var(--cream); }
+
+/* Equipment Checklist Table */
+.equip-table {
+  width: 100%; border-collapse: collapse;
+  margin: 1rem 0 1.5rem; border-radius: 8px;
+  overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.equip-table th {
+  background: var(--navy); color: white;
+  font-family: var(--heading-font);
+  font-size: 0.85rem; font-weight: 500;
+  padding: 0.7rem 1rem; text-align: left;
+}
+.equip-table td {
+  padding: 0.65rem 1rem; font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.equip-table td:first-child { font-weight: 500; color: var(--text-primary); width: 35%; }
+.equip-table tr:nth-child(even) td { background: var(--cream); }
+
+/* ═══════════════════════════════════════ */
+/* CALLOUT BOX                            */
+/* ═══════════════════════════════════════ */
+.callout {
+  background: var(--gold-bg);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.callout-title {
+  font-family: var(--heading-font);
+  font-weight: 600; color: var(--navy);
+  font-size: 1rem; margin-bottom: 0.4rem;
+}
+.callout p, .callout li {
+  font-size: 0.88rem; color: var(--text-body);
+  margin-bottom: 0.3rem;
+}
+
+/* Alert (red-toned) */
+.callout-alert {
+  background: #fef3f0;
+  border-left-color: #c0392b;
+}
+.callout-alert .callout-title { color: #922b21; }
+
+/* ═══════════════════════════════════════ */
+/* FOOTER                                 */
+/* ═══════════════════════════════════════ */
+.site-footer {
+  background: var(--navy-deep); padding: 3rem 2rem;
+  text-align: center;
+}
+.site-footer p {
+  font-family: var(--heading-font);
+  color: rgba(255,255,255,0.5); font-size: 0.95rem;
+  font-style: italic; margin-bottom: 0.4rem;
+}
+.site-footer .brand {
+  color: var(--gold); font-style: normal;
+  letter-spacing: 0.12em; font-weight: 500;
+  font-size: 0.85rem;
+}
+.site-footer a { color: var(--gold-muted); text-decoration: none; }
+.site-footer a:hover { color: var(--gold-light); }
+
+/* ═══════════════════════════════════════ */
+/* SCROLL ANIMATIONS                      */
+/* ═══════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1; transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════ */
+/* RESPONSIVE                             */
+/* ═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  :root { --section-gap: 3rem; }
+  .hero { min-height: 75vh; padding: 3rem 1.5rem; }
+  .handbook-body { padding: 1.5rem 1.25rem 4rem; }
+  .info-table td, .info-table th,
+  .comp-table td, .comp-table th,
+  .led-table td, .led-table th,
+  .equip-table td, .equip-table th { padding: 0.5rem 0.7rem; font-size: 0.82rem; }
+  .info-table .label, .led-table td:first-child,
+  .equip-table td:first-child { white-space: normal; }
+  .callout { padding: 1rem 1.1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ STICKY NAV ═══ -->
+<header class="topbar" id="topbar">
+  <div class="topbar-inner">
+    <a href="#top" class="topbar-brand">PRESTIGE <span>Weddings & Events</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="toc-nav" id="tocNav">
+      <a href="#welcome">Welcome</a>
+      <a href="#contact">Contact</a>
+      <a href="#started">Getting Started</a>
+      <a href="#conduct">Conduct</a>
+      <a href="#equipment">Equipment</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#loadin">Load In/Out</a>
+      <a href="#setup">Setup</a>
+      <a href="#albums">Albums</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#tips">Tips</a>
+      <a href="#compensation">Pay</a>
+      <a href="#post-event">Post-Event</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-content">
+    <div class="hero-rule"></div>
+    <h1>Photo Booth</h1>
+    <h2>Attendant Handbook</h2>
+    <p class="hero-sub">Your guide to delivering an exceptional photo booth experience.</p>
+    <p class="hero-url"><a href="https://www.prestigeweddings.com" target="_blank">prestigeweddings.com</a></p>
+  </div>
+  <div class="hero-scroll">
+    <a href="#welcome">
+      <span>Scroll</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══ HANDBOOK BODY ═══ -->
+<main class="handbook-body">
+
+  <!-- 1. WELCOME -->
+  <div class="section reveal" id="welcome">
+    <div class="section-number">Section 1</div>
+    <h2>Welcome to Prestige</h2>
+    <div class="section-divider"></div>
+    <p>Welcome to the Prestige Weddings & Events family! We're so excited to have you on the team. At Prestige, we're more than just wedding vendors — we're a crew of event professionals who genuinely care about creating unforgettable moments for our clients and their guests. And our photo booths? They're one of the most fun parts of what we do.</p>
+    <p>Think about it: you get to be at some of the best celebrations happening across Michigan, surrounded by people who are having the time of their lives. Your job is to make sure the photo booth adds to that energy — helping guests laugh, pose, and walk away with a photo strip they'll keep forever. That's pretty cool.</p>
+    <p>This handbook covers everything you need to know, from equipment setup to troubleshooting to what to wear. Read through it, keep it handy, and don't hesitate to reach out if you ever have questions. We're here to set you up for success, because when you shine, the whole Prestige team shines.</p>
+  </div>
+
+  <!-- 2. CONTACT -->
+  <div class="section reveal" id="contact">
+    <div class="section-number">Section 2</div>
+    <h2>Contact Information</h2>
+    <div class="section-divider"></div>
+    <p class="section-intro">Your primary point of contact for all photo booth operations.</p>
+    <table class="info-table">
+      <tr><td class="label">Photo Booth Manager</td><td>Nathan Golden</td></tr>
+      <tr><td class="label">Phone</td><td>248-953-9963</td></tr>
+      <tr><td class="label">Role</td><td>Equipment access, scheduling, event questions, supply restocking, troubleshooting</td></tr>
+    </table>
+    <div class="callout callout-alert">
+      <div class="callout-title">⚠ Urgent Issues During an Event</div>
+      <p>If you encounter a problem you cannot resolve during an event, call Nathan immediately.</p>
+      <p>Do not wait until after the event to report equipment failures or client concerns.</p>
+    </div>
+  </div>
+
+  <!-- 3. GETTING STARTED -->
+  <div class="section reveal" id="started">
+    <div class="section-number">Section 3</div>
+    <h2>Getting Started</h2>
+    <div class="section-divider"></div>
+    <h3>Event Planner Account</h3>
+    <p>We use an online booking system called DJ Event Planner to organize and manage all events. Every Prestige team member receives their own account, which serves as your primary tool for accessing event details, planning forms, and schedules.</p>
+    <p>If you have not yet received your login credentials, contact Nathan. He will provide your username and password and walk you through how to navigate the system.</p>
+    <h3>Preparing for Your First Event</h3>
+    <p>Before your first solo event, you will shadow an experienced attendant. During your shadow event, pay close attention to the full workflow: equipment pickup, transport, setup, guest interaction, breakdown, and equipment return. Take notes and ask questions freely.</p>
+  </div>
+
+  <!-- 4. PROFESSIONALISM & CONDUCT -->
+  <div class="section reveal" id="conduct">
+    <div class="section-number">Section 4</div>
+    <h2>Professionalism & Conduct</h2>
+    <div class="section-divider"></div>
+    <p class="section-intro">Looking sharp, showing up with energy, and making people feel welcome — that's the Prestige way.</p>
+    <p>We're in the business of creating celebrations that people remember forever, and you're a big part of that. The way you show up, interact with guests, and carry yourself at an event reflects directly on the entire Prestige team. The good news? Most of this comes naturally when you genuinely enjoy what you do — and this gig is a lot of fun.</p>
+
+    <h3>Dress Code</h3>
+    <p>You're going to be at weddings, galas, and celebrations where everyone is looking their best — and you should too! Think of it this way: you're part of the event, not just working at it. Dress like you belong there.</p>
+    <h4>Acceptable Attire</h4>
+    <ul>
+      <li>Slacks with a button-up shirt</li>
+      <li>Slacks with the Prestige polo</li>
+      <li>Blazer or sport coat</li>
+      <li>Dresses with flats or dress shoes</li>
+      <li>Dark, clean dress shoes (no sneakers, sandals, or casual footwear)</li>
+    </ul>
+    <h4>Not Acceptable</h4>
+    <ul>
+      <li>Jeans, shorts, or athletic wear</li>
+      <li>T-shirts, hoodies, or graphic tees</li>
+      <li>Sneakers, flip-flops, or worn-out shoes</li>
+    </ul>
+
+    <h3>On-Site Conduct</h3>
+    <p>Most of these are common sense, but they're worth spelling out so everyone's on the same page:</p>
+    <ul>
+      <li><strong>Arrive on time.</strong> Plan to get to the storage unit with enough time to load up and reach the venue by your scheduled setup time. Being early is being on time.</li>
+      <li><strong>Keep your phone put away</strong> while the booth is open. You're the host of the photo booth experience — guests should see you engaged, not scrolling. (Using your phone to contact Nathan or troubleshoot is obviously fine.)</li>
+      <li><strong>No eating or drinking at the photo booth table.</strong> If you need a break, step away from the booth area.</li>
+      <li><strong>Bring the energy!</strong> Smile, greet guests, invite people over, help them pick props. Some guests are a little shy at first — a warm invitation from you makes all the difference.</li>
+      <li><strong>Introduce yourself</strong> to the venue coordinator or point of contact when you arrive. Being friendly with venue staff goes a long way.</li>
+      <li><strong>Never consume alcohol</strong> at an event, even if offered by guests or the client. You're there as a professional.</li>
+    </ul>
+
+    <h3>Communication</h3>
+    <p>Confirm your event details at least 5 days out by checking the Photo Booth Planner form in DJ Event Planner. Know your setup time, start time, and end time. If anything looks off, reach out to Nathan to confirm.</p>
+    <p>If you're running late, can't make an event, or hit any kind of snag — let Nathan know as early as possible. We can always figure it out together, but only if we know about it.</p>
+  </div>
+
+  <!-- 5. EQUIPMENT & STORAGE -->
+  <div class="section reveal" id="equipment">
+    <div class="section-number">Section 5</div>
+    <h2>Equipment & Storage</h2>
+    <div class="section-divider"></div>
+    <h3>Storage Unit Location</h3>
+    <p>All photo booth equipment is stored in a Public Storage unit near our office in Rochester Hills:</p>
+    <table class="info-table">
+      <tr><td class="label">Address</td><td>2105 Avon Industrial Dr, Rochester Hills, MI 48309</td></tr>
+      <tr><td class="label">Unit Number</td><td>1080</td></tr>
+      <tr><td class="label">Access Codes</td><td><em>Contact Nathan for gate entry codes and lock combination</em></td></tr>
+      <tr><td class="label">Hours</td><td>24-hour access</td></tr>
+    </table>
+    <h3>Storage Unit Layout & Procedures</h3>
+    <ul>
+      <li>When you enter the facility, park along the right-hand side. Your car must be turned off while inside the structure.</li>
+      <li>Photo booths are stored on the left-hand side of the unit in their numbered spots (1–4).</li>
+      <li>DJ and lighting equipment is stored in bays on the right-hand side in their numbered spots (1–4).</li>
+      <li>All equipment must be returned to the storage unit the same night unless being used for back-to-back events.</li>
+    </ul>
+    <div class="callout">
+      <div class="callout-title">❗ Before Leaving the Storage Unit</div>
+      <p>Double-check that the storage door is properly latched and locked.</p>
+      <p>Scramble the lock combination before walking away.</p>
+      <p>Return all items to their correct, numbered positions.</p>
+    </div>
+  </div>
+
+  <!-- 6. EQUIPMENT CHECKLIST -->
+  <div class="section reveal" id="checklist">
+    <div class="section-number">Section 6</div>
+    <h2>Equipment Checklist</h2>
+    <div class="section-divider"></div>
+    <p class="section-intro">Verify every item before leaving the storage unit and again when repacking after the event.</p>
+    <table class="equip-table">
+      <thead><tr><th>Item</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Photo Booth Tower</td><td>May be 1 or 2 boxes depending on style (white or black)</td></tr>
+        <tr><td>Printer</td><td>Confirm ink and paper levels before departing</td></tr>
+        <tr><td>Backdrop & Frame</td><td>Confirm correct pattern per client's planning form (double-sided)</td></tr>
+        <tr><td>4 ft Folding Table</td><td>With black linen cover</td></tr>
+        <tr><td>Tote of Props</td><td>Inspect for damaged or missing props</td></tr>
+        <tr><td>Equipment Bag</td><td>Contains: extra paper, ink, printer tray, cords, extension cords, keepsake album (if applicable), tape, business cards, gaff tape, USB drives, power banks</td></tr>
+        <tr><td>Cart</td><td>For transporting all items in one trip</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <div class="callout-title">Supply Restocking</div>
+      <p>If any supplies are running low (paper, ink, props, tape, etc.), notify Nathan immediately so restocking can happen before the next event.</p>
+      <p>If you identify items that would improve the photo booth workflow, let us know. We value your input.</p>
+    </div>
+  </div>
+
+  <!-- 7. LOAD IN & LOAD OUT -->
+  <div class="section reveal" id="loadin">
+    <div class="section-number">Section 7</div>
+    <h2>Load In & Load Out</h2>
+    <div class="section-divider"></div>
+    <h3>Arriving at the Venue</h3>
+    <ol>
+      <li><strong>Scout first.</strong> Grab the equipment bag and walk in before unloading everything. Find the setup location before making trips.</li>
+      <li><strong>Find your contact.</strong> If a Prestige team member (DJ, Coordinator) is already on-site, ask them where to set up. If not, find the venue manager or main point of contact.</li>
+      <li><strong>Unload in one trip.</strong> Once you know your location, load everything onto the cart. You should be able to bring all items in a single trip.</li>
+      <li><strong>Be discreet.</strong> There may be dinner service, guests mingling, or dancing in progress. Move quietly and avoid disrupting the event.</li>
+    </ol>
+    <h3>Breaking Down & Loading Out</h3>
+    <ol>
+      <li><strong>Signal closure.</strong> At the end of your contracted time, turn off the ring light first. This signals to guests that the booth is closing without requiring a verbal announcement.</li>
+      <li><strong>Break down efficiently.</strong> Retrieve your cart and begin packing up. Load out should be a single trip, just like load in.</li>
+      <li><strong>Be respectful.</strong> Guests may still be enjoying the event. Break down quietly and avoid drawing attention.</li>
+      <li><strong>Return equipment.</strong> Drive directly to the storage unit after the event. Return all items to their correct numbered positions.</li>
+    </ol>
+  </div>
+
+  <!-- 8. SETTING UP THE BOOTH -->
+  <div class="section reveal" id="setup">
+    <div class="section-number">Section 8</div>
+    <h2>Setting Up the Booth</h2>
+    <div class="section-divider"></div>
+    <p class="section-intro">Follow these steps in order for a smooth, professional setup every time.</p>
+    <ol>
+      <li><strong>Layout Planning —</strong> Visualize your space before unpacking. Identify nearby power outlets. Plan the flow of guest traffic: where the waiting line will form, where guests will select props, and where they will wait for prints. Avoid placing the backdrop in front of a window during daylight hours.</li>
+      <li><strong>Backdrop Assembly —</strong> Assemble the frame, matching the numbered connection points. Lay the pillowcase backdrop cover onto the frame while it is still on the ground and zip the bottom securely. Confirm the correct pattern is facing outward (each backdrop is double-sided). Check the client's Photo Booth Planner form for the selected pattern.</li>
+      <li><strong>Table Setup —</strong> Set up the 4-foot folding table and cover it with the black linen. If the venue provides a 6-foot table, you may use theirs instead of, or in addition to, the 4-foot table depending on your layout.</li>
+      <li><strong>Tower Installation —</strong> Position the tower approximately 7 feet in front of the backdrop. Start with the base and work upward: base, body, then head. For white booths, use latches. For black booths, use wingnuts. Once assembled, center the tower so the camera captures the full backdrop without showing beyond its edges.</li>
+      <li><strong>Tower Power —</strong> Run an extension cord through the tower to the mounted power strip. For white towers, this is all that is needed. For black towers, also connect the iPad power cord and LED ring light power cord from the body to the head.</li>
+      <li><strong>Printer & Laptop Setup —</strong> Place the printer on the table (ideally at one end) and position the laptop on top of it. Connect the laptop power cable, printer power cable, and USB cable between the laptop and printer.</li>
+      <li><strong>Launch Luma Booth on iPad —</strong> Open the Luma Booth app, select the correct event by client name and date, and tap "Launch Event."</li>
+      <li><strong>Launch Luma Booth Assistant on Laptop —</strong> Open the Luma Booth Assistant program. When prompted to allow the program to make changes, select "Yes." Once connected, the status indicator will show a green "Yes." If it shows a red "No," verify that both the laptop and iPad are connected to the Wi-Fi network labeled "Photo Booth #." The network will display "No Internet" — this is normal and expected.</li>
+      <li><strong>Test Print —</strong> Print a test strip to confirm connectivity and verify that colors and cut lines are correct. To adjust settings, navigate to Settings (top right corner of the iPad) and access Camera Settings (temperature/tint) or Print Setup (alignment).</li>
+      <li><strong>Secure Cords —</strong> Tape down all cords with gaff tape to prevent tripping hazards. When removing tape at the end of the night, pull slowly to avoid leaving residue on the venue's flooring.</li>
+      <li><strong>Set Out Props —</strong> Arrange props neatly on the table as your final setup step. Doing this last prevents guests from thinking the booth is open prematurely. Keep the display clean and organized. If space is limited, select the best props rather than overcrowding the table.</li>
+      <li><strong>Coordinate with the DJ —</strong> If a Prestige DJ is on-site, communicate your open and close times. Let them know if the event includes a keepsake or guest book album so they can make announcements.</li>
+      <li><strong>Tower Light On —</strong> Turn on the tower light (if not already on), smile, and get ready to host. Your energy sets the tone for the guest experience.</li>
+    </ol>
+  </div>
+
+  <!-- 9. KEEPSAKE ALBUMS & GUEST BOOKS -->
+  <div class="section reveal" id="albums">
+    <div class="section-number">Section 9</div>
+    <h2>Keepsake Albums & Guest Books</h2>
+    <div class="section-divider"></div>
+    <p>Not every event includes an album or guest book. Check the Photo Booth Planner form or confirm with Nathan before the event.</p>
+    <h3>Keepsake Album</h3>
+    <p>A keepsake album is a photo album created during the event that includes a copy of each photo strip. It is given to the client at the end of the night.</p>
+    <ol>
+      <li>Open the keepsake album to an empty page.</li>
+      <li>Print an extra copy of each photo session (this may produce 2 extra copies; use one for the album).</li>
+      <li>Slide the photo strip into the sleeve.</li>
+      <li>Once the front side of a page is full, flip to the back. Once the full page is complete, move to a new page.</li>
+      <li>Continue until the album is full or the photo booth session ends.</li>
+      <li>Give the completed album to the client or a designated responsible party.</li>
+    </ol>
+    <h3>Guest Book</h3>
+    <p>A guest book is similar to a keepsake album, but guests are invited to write a message or sign next to their photo strip.</p>
+    <ol>
+      <li>Print an extra copy of each photo session. Use one for the guest book and dispose of any extras.</li>
+      <li>Slide the strip into a sleeve.</li>
+      <li>Invite guests to write a note or sign above their photo strip. Provide pens and gently encourage participation.</li>
+      <li>Continue until the guest book is full or the session ends.</li>
+      <li>Give the completed guest book to the client or a designated responsible party.</li>
+    </ol>
+  </div>
+
+  <!-- 10. TROUBLESHOOTING -->
+  <div class="section reveal" id="troubleshooting">
+    <div class="section-number">Section 10</div>
+    <h2>Troubleshooting</h2>
+    <div class="section-divider"></div>
+    <p class="section-intro">These are the most common issues you will encounter. Try these solutions first before calling Nathan.</p>
+    <p>Our photo booths use the <strong>DNP DS620A</strong> dye-sublimation printer. Understanding the basics of this printer will help you resolve most issues quickly and confidently.</p>
+
+    <h3>Photo Booth Wi-Fi Network Not Showing Up</h3>
+    <p>This is the single most common issue. The Wi-Fi router is mounted inside the photo booth tower, and the fix is almost always the same:</p>
+    <ol>
+      <li>Check the router's power cable inside the tower. During transport, the cable frequently comes unplugged. Reconnect it.</li>
+      <li>Wait 30–60 seconds for the network to appear on both the iPad and laptop.</li>
+      <li>If it still does not appear, power-cycle the router: unplug it, wait 10 seconds, and plug it back in.</li>
+      <li>Verify both the iPad and laptop are searching for the correct network (labeled "Photo Booth #").</li>
+      <li>If the issue persists after these steps, call Nathan.</li>
+    </ol>
+
+    <h3>Luma Booth Assistant Not Connecting</h3>
+    <p>If the Luma Booth Assistant on the laptop displays a red "No" instead of a green "Yes":</p>
+    <ol>
+      <li>Confirm both the iPad and laptop are connected to the same "Photo Booth #" Wi-Fi network.</li>
+      <li>Close the Luma Booth Assistant program on the laptop completely, then reopen it.</li>
+      <li>If it still shows red, restart the Wi-Fi router inside the tower (unplug, wait 10 seconds, reconnect).</li>
+      <li>As a last resort, restart both the iPad and laptop, reconnect both to the Photo Booth network, and relaunch the Luma Booth app and Luma Booth Assistant.</li>
+      <li>If none of these steps work, call Nathan.</li>
+    </ol>
+
+    <h3>Printer Not Printing</h3>
+    <p>If the printer is not responding to print commands, work through these checks:</p>
+    <ul>
+      <li><strong>Confirm the printer is powered on.</strong> The DNP DS620A has no power switch — it powers on when plugged in. If the POWER LED is not lit, check that the power cord is fully seated in the printer's power inlet and the outlet.</li>
+      <li><strong>Check the USB cable.</strong> Ensure it is securely connected to both the printer and the laptop. Try unplugging and reconnecting both ends.</li>
+      <li><strong>Check the printer's LED indicators.</strong> If the PAPER LED is flashing, the paper roll is empty or improperly loaded. If the RIBBON LED is flashing, the ink ribbon needs replacement. If the ERROR LED is flashing red, see the error reference below.</li>
+      <li><strong>Restart the Luma Booth Assistant</strong> on the laptop and attempt a test print.</li>
+      <li><strong>If the printer still does not respond,</strong> unplug the printer power cord, wait 10 seconds, reconnect, and try again.</li>
+      <li>If the issue continues, call Nathan.</li>
+    </ul>
+
+    <h3>Paper Jam</h3>
+    <p>Paper jams are indicated by the ERROR LED flashing. To clear a jam on the DNP DS620A:</p>
+    <ol>
+      <li>Use the opening lever on the front of the printer to pull out the mechanism unit.</li>
+      <li>Remove the ribbon cassette from the printer.</li>
+      <li>Gently pull out the jammed paper. Pull slowly — do not yank or use excessive force, as this can damage the printer.</li>
+      <li>If the paper is wrinkled or partially printed, use scissors to cut off the damaged section. The cut must be clean and even, or the printer will not feed properly.</li>
+      <li>Reinstall the ribbon cassette and paper according to the loading procedures (see Changing Paper & Ink Ribbon below).</li>
+      <li>Close the mechanism unit. The printer will perform a paper initialization (ejecting up to five blank sheets to clear the damaged outer layer).</li>
+      <li>Run a test print to confirm normal operation.</li>
+    </ol>
+
+    <div class="callout">
+      <div class="callout-title">⚠ Ribbon Caught in Printer</div>
+      <p>If the ink ribbon has become caught or tangled, remove the ribbon cassette and gently pull out the caught ribbon.</p>
+      <p>Cut the ribbon, then reattach the loose end to the take-up side using tape.</p>
+      <p>Wind the take-up roller until the taped section is no longer visible and there is no slack.</p>
+      <p>Reinstall the cassette. If any ribbon fragments remain inside the printer, clean the platen roller with a soft cloth moistened with ethyl alcohol.</p>
+    </div>
+
+    <h3>Printer Stopped with Paper Partially Cut</h3>
+    <p>If the paper cutter stops mid-cut:</p>
+    <ol>
+      <li>Set the printer's ON/Standby switch to Standby, then back to ON. This resets the cutter blade to its standby position.</li>
+      <li>Remove the partially cut paper from the printer.</li>
+      <li>Follow the paper jam procedure above to clear any remaining paper and reinitialize.</li>
+      <li>If you cannot release the paper, call Nathan.</li>
+    </ol>
+
+    <h3>Changing Paper & Ink Ribbon</h3>
+    <p>Replacing paper and ink ribbon is a routine part of working the photo booth. Extra supplies are in your equipment bag. The DNP DS620A uses paper rolls and ribbon cassettes that must be changed together or independently as they run out.</p>
+    <h4>Replacing the Paper Roll</h4>
+    <ul>
+      <li>Use the opening lever to pull out the mechanism unit. Lift the paper lever and raise the front cover.</li>
+      <li>Remove the paper holders from the printer and take off the empty paper roll.</li>
+      <li>Set the new paper roll onto the paper holders, ensuring there are no gaps between the roll and the holder. The paper should not protrude from the edges of the roll.</li>
+      <li>Reinsert the paper holders into the printer. Ensure the seal on the paper (→PULL) faces the correct direction as labeled.</li>
+      <li>While pressing the paper holder, rotate the paper in the direction of the arrow to advance the leading edge until the printer beeps. The flashing orange LED will turn off.</li>
+      <li>Set the scrap box back in place and close the front cover, then close the mechanism unit.</li>
+      <li>The printer will perform a paper initialization (ejecting up to five blank sheets). Run a test print to confirm alignment.</li>
+    </ul>
+    <h4>Replacing the Ink Ribbon</h4>
+    <ul>
+      <li>Pull out the mechanism unit and remove the ribbon cassette.</li>
+      <li>Remove the spent ribbon from the cassette and set the new ribbon in place. The supply side should face the front of the printer.</li>
+      <li>Rotate the take-up roller in the direction of the arrow to remove any slack in the ribbon.</li>
+      <li>Reinstall the ribbon cassette into the printer and close the mechanism unit.</li>
+      <li>Run a test print to confirm print quality and correct color output.</li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-title">Paper & Ribbon Handling Tips</div>
+      <p>Never place paper rolls or ribbon cassettes directly on the floor, table, or any work surface. Keep them on the plastic bag or sheet they came in to prevent dust from affecting print quality.</p>
+      <p>Always empty the scrap box when replacing paper. Scraps from cut paper collect in the box and can cause errors if it overflows.</p>
+      <p>If you notice repeated indentations or marks on prints at regular intervals, the platen roller may need cleaning. Use a soft cloth with ethyl alcohol to wipe the roller.</p>
+    </div>
+
+    <h3>DNP DS620A LED Error Reference</h3>
+    <p>The printer has four LED indicators: POWER, RIBBON, PAPER, and ERROR. Use this quick reference to diagnose issues:</p>
+    <table class="led-table">
+      <thead><tr><th>LED Pattern</th><th>Meaning & Action</th></tr></thead>
+      <tbody>
+        <tr><td>PAPER flashing</td><td>Paper roll empty. Replace with a new roll.</td></tr>
+        <tr><td>RIBBON flashing</td><td>Ink ribbon empty. Replace with a new ribbon cassette.</td></tr>
+        <tr><td>ERROR flashing (red)</td><td>Paper jam, ribbon jam, or mechanical error. Follow troubleshooting steps above.</td></tr>
+        <tr><td>RIBBON + PAPER alternating</td><td>Media size mismatch. The print job size does not match the loaded paper/ribbon. Confirm correct media is installed.</td></tr>
+        <tr><td>ERROR steady (red)</td><td>System error. Toggle ON/Standby switch. If unresolved, call Nathan.</td></tr>
+        <tr><td>All LEDs normal, no print</td><td>Check USB cable and Luma Booth Assistant connection.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-alert">
+      <div class="callout-title">General Troubleshooting Rule</div>
+      <p>If you have tried the steps above and the issue is not resolved, call Nathan immediately.</p>
+      <p>Do not spend more than 10 minutes troubleshooting on your own during an active event.</p>
+      <p>Communicate with guests politely: "We're making a quick adjustment — we'll be back up in just a moment!"</p>
+    </div>
+  </div>
+
+  <!-- 11. PRO TIPS -->
+  <div class="section reveal" id="tips">
+    <div class="section-number">Section 11</div>
+    <h2>Pro Tips</h2>
+    <div class="section-divider"></div>
+    <p class="section-intro">Advice from experienced attendants to help you deliver an exceptional experience.</p>
+    <ul>
+      <li>Before opening, check your ink and paper levels to gauge if replacements will be needed during the session. Keep spare supplies accessible for quick swaps.</li>
+      <li>Set aside copies of photos taken by the bride and groom (or the guest of honor) in a designated pile. Hand these over at the end of the event or place them at the gift/card table.</li>
+      <li>When guests are posing and cannot see the countdown screen (e.g., facing away for a kiss), count down out loud for them.</li>
+      <li>If a photo turns out poorly or someone was not ready, delete it quickly by tapping the "X" once during the session. Do not let a bad photo print.</li>
+      <li>Place sunglasses and sign props on the side of the table closest to the backdrop for easy guest access. These are the most popular items.</li>
+      <li>Maintain the prop display throughout the event. Guests will scatter props — take a moment between sessions to tidy up.</li>
+      <li>If guests seem hesitant to use the booth, invite them directly: "Have you had a chance to take a photo strip yet? Come on over!" A warm invitation goes a long way.</li>
+    </ul>
+  </div>
+
+  <!-- 12. COMPENSATION -->
+  <div class="section reveal" id="compensation">
+    <div class="section-number">Section 12</div>
+    <h2>Compensation</h2>
+    <div class="section-divider"></div>
+    <p>Photo booth attendant pay is <strong>$25 per hour</strong>. Your paid hours begin when you arrive at the storage unit to pick up equipment and end when the equipment has been returned to the storage unit after the event.</p>
+    <h3>Compensation by Package</h3>
+    <table class="comp-table">
+      <thead><tr><th>Package</th><th>Est. Compensation</th><th>Typical Hours</th></tr></thead>
+      <tbody>
+        <tr><td>3-Hour Photo Booth</td><td>$150</td><td>6:30 PM – 11:00 PM</td></tr>
+        <tr><td>4-Hour Photo Booth</td><td>$175</td><td>5:30 PM – 11:00 PM</td></tr>
+        <tr><td>5-Hour Photo Booth</td><td>$200</td><td>3:30 PM – 10:00 PM</td></tr>
+        <tr><td>6-Hour Photo Booth</td><td>$225</td><td>4:30 PM – 12:00 AM</td></tr>
+        <tr><td>Idle Hour</td><td>$25/hour</td><td>Booth open, closed, then reopened</td></tr>
+      </tbody>
+    </table>
+    <p>Idle hours are typically added to a 4-hour package when the photo booth opens during cocktail hour, closes for dinner, and reopens afterward.</p>
+    <h3>Flexibility & Overtime</h3>
+    <p>Event timelines can shift. If the client or DJ requests the booth to stay open beyond the contracted time, accommodate the request when possible. You will be compensated for all additional time at the standard $25/hour rate.</p>
+  </div>
+
+  <!-- 13. POST-EVENT RESPONSIBILITIES -->
+  <div class="section reveal" id="post-event">
+    <div class="section-number">Section 13</div>
+    <h2>Post-Event Responsibilities</h2>
+    <div class="section-divider"></div>
+    <p class="section-intro">Your job is not done when the booth closes. Complete these steps after every event.</p>
+    <ol>
+      <li><strong>Return Equipment —</strong> Drive directly to the storage unit after the event. Return all items to their correct numbered positions. Verify the storage door is latched, locked, and the combination scrambled.</li>
+      <li><strong>Submit Your Hours —</strong> Text or send your hours to Mike after every event. Include the event name, your start time (arrival at storage unit), and your end time (departure from storage unit after returning equipment).</li>
+      <li><strong>Complete the Post-Event Survey —</strong> Fill out the post-event survey (link will be provided). This is a new requirement and helps us track equipment condition, client satisfaction, and identify areas for improvement.</li>
+      <li><strong>Report Issues —</strong> If any equipment malfunctioned, supplies are low, or anything notable happened during the event, notify Nathan immediately. Do not wait for the next event for someone else to discover the problem.</li>
+    </ol>
+  </div>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <p>Thank you for being part of the Prestige team.</p>
+  <p>Your professionalism, energy, and attention to detail are what make<br>every event a memorable experience for our clients and their guests.</p>
+  <p class="brand" style="margin-top:1.2rem;">PRESTIGE WEDDINGS & EVENTS</p>
+  <p style="margin-top:0.3rem;"><a href="https://www.prestigeweddings.com" target="_blank">prestigeweddings.com</a></p>
+</footer>
+
+<script>
+// Nav toggle
+const toggle = document.getElementById('navToggle');
+const tocNav = document.getElementById('tocNav');
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('open');
+  tocNav.classList.toggle('open');
+});
+// Close nav on link click (mobile)
+tocNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    toggle.classList.remove('open');
+    tocNav.classList.remove('open');
+  });
+});
+
+// Topbar shadow on scroll
+const topbar = document.getElementById('topbar');
+window.addEventListener('scroll', () => {
+  topbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+
+// Active nav highlighting
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.toc-nav a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.toc-nav a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+sections.forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
